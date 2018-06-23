@@ -77,14 +77,15 @@ class Filter extends Component {
 
 class Playlist extends Component {
   render() {
+    let playlist = this.props.playlist
     return (
       <div style={{...defaultStyle, display: "inline-block", width: "20%"}}>
        <img/>
-       <h3>Playlist Name</h3>
+       <h3>{playlist.name}</h3>
        <ul>
-        <li>Artist 1</li>
-        <li>Artist 2</li>
-        <li>Artist 3</li>
+       {playlist.songs.map(song => 
+        <li>{song.name}</li>
+       )}
        </ul>
       </div>
     );
@@ -113,10 +114,9 @@ class App extends Component {
           <PlaylistCounter playlists={this.state.serverData.user.playlists}/>
           <HoursCounter playlists={this.state.serverData.user.playlists}/>
           <Filter/>
-          <Playlist/>
-          <Playlist/>
-          <Playlist/>
-          <Playlist/>
+          {this.state.serverData.user.playlists.map((playlist) => {
+            return <Playlist playlist={playlist}/>
+          })}
         </div> : <h3 style={defaultStyle}>Loading...</h3>
         }
       </div>
